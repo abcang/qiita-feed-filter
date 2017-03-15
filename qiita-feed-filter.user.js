@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Qiita Feed Filter
 // @namespace    https://abcang.net/
-// @version      0.1
+// @version      0.2
 // @description  Qiitaのフィードをタグやいいねなどでフィルタリングします
 // @author       ABCanG
 // @match        http://qiita.com/*
@@ -84,7 +84,6 @@
     };
 
     var filterList = [
-        ['stock', 'ストック'],
         ['like', 'いいね'],
         ['tag', 'タグ'],
         ['comment', 'コメント'],
@@ -96,11 +95,18 @@
         return obj;
     }, {});
 
-    var $stream = $($('.following-stream')[0]);
-    $stream.find('div:first').css({marginTop: '25px'});
+    // css
+    var tag = document.createElement('style');
+    tag.type = 'text/css';
+    document.getElementsByTagName('html').item(0).appendChild(tag);
+    var stylesheet = document.styleSheets.item(document.styleSheets.length - 1);
+    stylesheet.insertRule( ".qiita-filter-list{ margin-top: -10px; margin-bottom: 0px; }" , stylesheet.cssRules.length );
+    stylesheet.insertRule( ".qiita-filter-label{ display: inline-block; padding-left: 5px; }" , stylesheet.cssRules.length );
+    stylesheet.insertRule( ".following-stream .activities>div:first-child{ margin-top: 0px; }" , stylesheet.cssRules.length );
 
-    var $list = $('<div>').append(filterList.map(function(item) {
-        return $('<label>').append([
+    // create qiita-filter-list
+    var $list = $('<div>').addClass('qiita-filter-list').append(filterList.map(function(item) {
+        return $('<label>').addClass('qiita-filter-label').append([
             $('<input>').addClass('qiita-filter').attr({
                 id: 'filter-' + item[0],
                 name: item[0],
@@ -108,13 +114,13 @@
                 checked: (filter[item[0]] || null)
             }),
             $('<span>').text(item[1])
-        ]).attr({for: 'filter-' + item[0]}).css({
-            display: 'inline-block',
-            paddingLeft: '5px'
-        });
+        ]).attr({for: 'filter-' + item[0]});
     }));
+
+    var $stream = $($('.following-stream')[0]);
     $($stream).prepend($list);
 
+    // check event
     $('.qiita-filter').on('change', function() {
         var $this = $(this);
         var name = $this.attr('name');
