@@ -100,8 +100,9 @@
     tag.type = 'text/css';
     document.getElementsByTagName('html').item(0).appendChild(tag);
     var stylesheet = document.styleSheets.item(document.styleSheets.length - 1);
-    stylesheet.insertRule( ".qiita-filter-list{ margin-top: -10px; margin-bottom: 0px; }" , stylesheet.cssRules.length );
+    stylesheet.insertRule( ".qiita-filter-list{ margin-top: -10px; margin-bottom: 20px; }" , stylesheet.cssRules.length );
     stylesheet.insertRule( ".qiita-filter-label{ display: inline-block; padding-left: 5px; }" , stylesheet.cssRules.length );
+    stylesheet.insertRule( ".activities{ margin-top: -20px; }" , stylesheet.cssRules.length );
     stylesheet.insertRule( ".following-stream .activities>div:first-child{ margin-top: 0px; }" , stylesheet.cssRules.length );
 
     // create qiita-filter-list
