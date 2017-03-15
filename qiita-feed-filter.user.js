@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Qiita Feed Filter
 // @namespace    https://abcang.net/
-// @version      0.2
+// @version      0.3
 // @description  Qiitaのフィードをタグやいいねなどでフィルタリングします
 // @author       ABCanG
 // @match        http://qiita.com/*
